@@ -25,13 +25,13 @@ namespace txt_lang_detector
             InitializeComponent();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void richTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (textBox1.Text != "")
+            if (richTextBox.Text != "")
             {
-                rus = Functions.detect(ru, textBox1.Text.ToLower());
-                eng = Functions.detect(en, textBox1.Text.ToLower());
-                ukr = Functions.detect(ua, textBox1.Text.ToLower());
+                rus = Functions.detect(ru, richTextBox.Text.ToLower());
+                eng = Functions.detect(en, richTextBox.Text.ToLower());
+                ukr = Functions.detect(ua, richTextBox.Text.ToLower());
 
                 if (rus > eng && rus > ukr)
                 {
@@ -51,7 +51,6 @@ namespace txt_lang_detector
             {
                 langNameLabel.Text = "Язык текста: ";
             }
-
         }
     }
 }
