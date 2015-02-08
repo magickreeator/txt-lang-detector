@@ -26,6 +26,7 @@ namespace txt_lang_detector
             return true;
         }
         // Если текущий элемент меньше тех, что расположены выше, то нужно вернуть истину.
+        // Это для проверки последнего элемента массива, так как со следующими элементами сравнить невозможно, то нужно сравнивать с предыдущими.
         bool check_up(double[] count, int i)
         {
             for (int j = i; j > 1; j--)
@@ -47,8 +48,6 @@ namespace txt_lang_detector
         {
             // Для  хранения частот.
             double[] Freq = new double[lang.Length];
-            // 
-            bool[] rank_check = new bool[lang.Length];
             // Для хранения количества букв.
             double letter_count = 0;
             // Обнуление значений элементов массива.
@@ -56,19 +55,17 @@ namespace txt_lang_detector
             {
                 Freq[i] = 0;
             }
-            // 
             for (int i = 0; i < text.Length; i++)
             {
                 for (int j = 0; j < lang.Length; j++)
                 {
                     // Если рассматриваемый символ является буквой.
-                    if (text[i] >= 'a' && text[i] <= 'z' || text[i] >= 'а' && text[i] <= 'я')
+                    if (text[i] >= 'a' && text[i] <= 'z' || text[i] >= 'а' && text[i] <= 'я' || text[i] == 'і' || text[i] == 'ї' || text[i] == '\'' || text[i] == 'ґ' || text[i] == 'і' || text[i] == 'є')
                     {
                         letter_count++;
                         if (text[i] == lang[j])
                         {
-                            //char[] ccounter = new char[lang.Length];
-                            // Инкрементировать количество найденных букв в позиции предпологаемых частот.
+                            // Инкрементировать количество найденных букв в позиции соответствующей буквы в массиве.
                             Freq[j]++;
                         }
                     }
@@ -93,10 +90,8 @@ namespace txt_lang_detector
             {
                 equals++;
             }
-            // Если количество совпадений больше хотя бы половины количества букв в языке, то вернуть истину.
 
             return equals;
-
         }
     }
 }
