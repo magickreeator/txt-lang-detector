@@ -19,7 +19,7 @@ namespace txt_lang_detector
         char[] en = { 'e', 't', 'a', 'o', 'i', 'n', 's', 'h', 'r', 'd', 'l', 'c', 'u', 'm', 'w', 'f', 'g', 'y', 'p', 'b', 'v', 'k', 'j', 'x', 'q', 'z' };
         // Частотность букв украинского языка ( http://megamozg.ru/post/2336/ )
         char[] ua = { 'о', 'а', 'н', 'и', 'т', 'е', 'в', 'і', 'р', 'с', 'к', 'л', 'у', 'д', 'м', 'п', 'я', 'з', 'ь', 'б', 'г', 'ч', 'й', 'х', 'ж', 'ю', 'ш', 'ц', 'щ', 'є', 'ї', 'ф', '\'', 'ґ' };
-        int rus, eng, ukr;
+        double rus, eng, ukr;
         public mainForm()
         {
             InitializeComponent();

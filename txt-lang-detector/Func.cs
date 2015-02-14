@@ -9,16 +9,11 @@ namespace txt_lang_detector
     class Func
     {
         // Если текущий элемент больше тех, что расположены ниже, то нужно вернуть истину.
-        bool check_down(double[] count, int i)
+        bool check_down(double[] Freq, int i)
         {
-            for (int j = i; j < count.Length - 1; j++)
+            for (int j = i; j < Freq.Length - 1; j++)
             {
-
-                if (count[i] > count[j + 1])
-                {
-
-                }
-                else
+                if (Freq[i] <= Freq[j + 1])
                 {
                     return false;
                 }
@@ -27,16 +22,11 @@ namespace txt_lang_detector
         }
         // Если текущий элемент меньше тех, что расположены выше, то нужно вернуть истину.
         // Это для проверки последнего элемента массива, так как со следующими элементами сравнить невозможно, то нужно сравнивать с предыдущими.
-        bool check_up(double[] count, int i)
+        bool check_up(double[] Freq)
         {
-            for (int j = i; j > 1; j--)
+            for (int j = Freq.Length - 1; j > 0; j--)
             {
-
-                if (count[i] < count[j - 1])
-                {
-
-                }
-                else
+                if (Freq[Freq.Length - 1] >= Freq[j - 1])
                 {
                     return false;
                 }
@@ -44,7 +34,7 @@ namespace txt_lang_detector
             return true;
         }
 
-        public int detect(char[] lang, string text)
+        public double detect(char[] lang, string text)
         {
             // Для  хранения частот.
             double[] Freq = new double[lang.Length];
@@ -60,7 +50,7 @@ namespace txt_lang_detector
                 for (int j = 0; j < lang.Length; j++)
                 {
                     // Если рассматриваемый символ является буквой.
-                    if (text[i] >= 'a' && text[i] <= 'z' || text[i] >= 'а' && text[i] <= 'я' || text[i] == 'і' || text[i] == 'ї' || text[i] == '\'' || text[i] == 'ґ' || text[i] == 'і' || text[i] == 'є')
+                    if (text[i] >= 'a' && text[i] <= 'z' || text[i] >= 'а' && text[i] <= 'я' || text[i] == 'ё' || text[i] == 'і' || text[i] == 'ї' || text[i] == '\'' || text[i] == 'ґ' || text[i] == 'і' || text[i] == 'є')
                     {
                         letter_count++;
                         if (text[i] == lang[j])
@@ -71,27 +61,33 @@ namespace txt_lang_detector
                     }
                 }
             }
-            for (int i = 0; i < lang.Length; i++)
+            if (letter_count != 0)
             {
-                // Вычисление частот по формуле Freq_x=Q_x/Q_all.
-                Freq[i] = Freq[i] / letter_count;
+                for (int i = 0; i < lang.Length; i++)
+                {
+                    // Вычисление частот по формуле Freq_x=Q_x/Q_all.
+                    Freq[i] = Freq[i] / letter_count;
+                }
+            }
+            else
+            {
+                return 0;
             }
             // Для хранения совпадений найденных частот и эталонных частот.
-            int equals = 0;
+            double equals = 0;
             for (int i = 0; i < lang.Length; i++)
             {
                 if (check_down(Freq, i))
                 {
                     equals++;
                 }
-
             }
-            if (check_up(Freq, lang.Length - 1))
+            if (check_up(Freq))
             {
                 equals++;
             }
 
-            return equals;
+            return equals / lang.Length;
         }
     }
 }
